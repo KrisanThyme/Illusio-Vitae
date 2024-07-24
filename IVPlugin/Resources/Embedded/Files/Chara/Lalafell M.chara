@@ -1,0 +1,128 @@
+{
+  "FileExtension": ".chara",
+  "TypeName": "Illusio Vitae/Character Files",
+  "FileVersion": 1,
+  "SaveMode": "All",
+  "Nickname": null,
+  "ModelType": 0,
+  "ObjectKind": "None",
+  "Race": "Lalafel",
+  "Gender": "Masculine",
+  "Age": "Normal",
+  "Height": 50,
+  "Tribe": "Plainsfolk",
+  "Head": 1,
+  "Hair": 107,
+  "EnableHighlights": true,
+  "Skintone": 25,
+  "REyeColor": 11,
+  "HairTone": 29,
+  "Highlights": 20,
+  "FacialFeatures": "None",
+  "LimbalEyes": 0,
+  "Eyebrows": 0,
+  "LEyeColor": 11,
+  "Eyes": 0,
+  "Nose": 0,
+  "Jaw": 0,
+  "Mouth": 0,
+  "LipsToneFurPattern": 0,
+  "EarMuscleTailSize": 25,
+  "TailEarsType": 2,
+  "Bust": 0,
+  "FacePaint": 0,
+  "FacePaintColor": 0,
+  "Glasses": 0,
+  "MainHand": {
+    "Color": "0, 0, 0",
+    "Scale": "0, 0, 0",
+    "ModelSet": 301,
+    "ModelBase": 31,
+    "ModelVariant": 1,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "OffHand": {
+    "Color": "0, 0, 0",
+    "Scale": "0, 0, 0",
+    "ModelSet": 351,
+    "ModelBase": 31,
+    "ModelVariant": 1,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "HeadGear": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Body": {
+    "ModelBase": 92,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Hands": {
+    "ModelBase": 92,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Legs": {
+    "ModelBase": 92,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Feet": {
+    "ModelBase": 92,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Ears": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Neck": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Wrists": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "LeftRing": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "RightRing": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "SkinColor": "0.7854825, 0.84928876, 0.72416764",
+  "SkinGloss": "0.0625, 0.0625, 0.0625",
+  "LeftEyeColor": "0.71088046, 0.65896195, 0.47097272",
+  "RightEyeColor": "0.71088046, 0.65896195, 0.47097272",
+  "LimbalRingColor": "0.6029066, 0.6029066, 0.6029066",
+  "HairColor": "0.28864285, 0.24804306, 0.15378702",
+  "HairGloss": "0.4549635, 0.41868514, 0.33685508",
+  "HairHighlight": "0.5493426, 0.43404847, 0.25196466",
+  "MouthColor": "0, 0, 0, 0",
+  "BustScale": null,
+  "Transparency": 1,
+  "MuscleTone": 1,
+  "HeightMultiplier": 1,
+  "Voice": 17
+}

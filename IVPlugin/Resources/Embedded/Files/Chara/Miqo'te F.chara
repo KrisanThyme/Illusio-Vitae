@@ -1,0 +1,128 @@
+{
+  "FileExtension": ".chara",
+  "TypeName": "Illusio Vitae/Character Files",
+  "FileVersion": 1,
+  "SaveMode": "All",
+  "Nickname": null,
+  "ModelType": 0,
+  "ObjectKind": "None",
+  "Race": "Miqote",
+  "Gender": "Feminine",
+  "Age": "Normal",
+  "Height": 50,
+  "Tribe": "SeekerOfTheSun",
+  "Head": 3,
+  "Hair": 6,
+  "EnableHighlights": false,
+  "Skintone": 136,
+  "REyeColor": 81,
+  "HairTone": 92,
+  "Highlights": 0,
+  "FacialFeatures": "None",
+  "LimbalEyes": 0,
+  "Eyebrows": 0,
+  "LEyeColor": 81,
+  "Eyes": 0,
+  "Nose": 0,
+  "Jaw": 1,
+  "Mouth": 129,
+  "LipsToneFurPattern": 170,
+  "EarMuscleTailSize": 25,
+  "TailEarsType": 1,
+  "Bust": 50,
+  "FacePaint": 0,
+  "FacePaintColor": 0,
+  "Glasses": 0,
+  "MainHand": {
+    "Color": "0, 0, 0",
+    "Scale": "0, 0, 0",
+    "ModelSet": 301,
+    "ModelBase": 31,
+    "ModelVariant": 1,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "OffHand": {
+    "Color": "0, 0, 0",
+    "Scale": "0, 0, 0",
+    "ModelSet": 351,
+    "ModelBase": 31,
+    "ModelVariant": 1,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "HeadGear": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Body": {
+    "ModelBase": 89,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Hands": {
+    "ModelBase": 89,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Legs": {
+    "ModelBase": 89,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Feet": {
+    "ModelBase": 89,
+    "ModelVariant": 2,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Ears": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Neck": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "Wrists": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "LeftRing": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "RightRing": {
+    "ModelBase": 0,
+    "ModelVariant": 0,
+    "DyeId": 0,
+    "DyeId2": 0
+  },
+  "SkinColor": "0.82062286, 0.75111115, 0.704283",
+  "SkinGloss": "0.0625, 0.0625, 0.0625",
+  "LeftEyeColor": "0.68467516, 0.28444448, 0.2364629",
+  "RightEyeColor": "0.68467516, 0.28444448, 0.2364629",
+  "LimbalRingColor": "0.6029066, 0.6029066, 0.6029066",
+  "HairColor": "0.36, 0.0865052, 0.073218",
+  "HairGloss": "0.5435448, 0.28864285, 0.27203387",
+  "HairHighlight": "0.36, 0.0865052, 0.073218",
+  "MouthColor": "0.19637063, 0.04319877, 0.040000003, 0.2509804",
+  "BustScale": null,
+  "Transparency": 1,
+  "MuscleTone": 1,
+  "HeightMultiplier": 1,
+  "Voice": 73
+}
