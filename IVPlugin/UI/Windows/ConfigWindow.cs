@@ -35,7 +35,6 @@ public static class ConfigWindow
     private static bool aSceneLocalSpace = true;
     private static bool aSceneWarningShow = true;
     private static bool FadeInOnAnimation = true;
-
     public static void Draw()
     {
         if (!IsOpen) return;
