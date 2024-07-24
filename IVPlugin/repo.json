@@ -4,7 +4,7 @@
         "Name": "IllusioVitae",
         "Punchline": "Illusion of Life",
         "Description": "Custom Emote Mod Manager and GPose Suite.",
-        "InternalName": "IllusioVitae",
+        "InternalName": "IVPlugin",
         "AssemblyVersion": "1.0",
         "TestingAssemblyVersion": "1.0",
         "RepoUrl": "https://github.com/KrisanThyme/Illusio-Vitae",
