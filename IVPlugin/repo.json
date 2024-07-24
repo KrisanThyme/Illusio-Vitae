@@ -1,0 +1,20 @@
+[
+    {
+        "Author": "Krisan Thyme & MrPolarbear",
+        "Name": "Illusio Vitae",
+        "Punchline": "Enhanced GPosing.",
+        "Description": "",
+        "InternalName": "Illusio",
+        "AssemblyVersion": "0.3.2.2",
+        "TestingAssemblyVersion": "0.3.2.2",
+        "RepoUrl": "https://github.com/KrisanThyme/Illusio-Vitae",
+        "ApplicableVersion": "any",
+        "DalamudApiLevel": 10,
+        "DownloadLinkInstall": "",
+        "DownloadLinkTesting": "",
+        "DownloadLinkUpdate": "",
+        "IconUrl": "",
+        "Tags": [
+        ]
+    }
+]

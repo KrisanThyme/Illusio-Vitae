@@ -960,26 +960,30 @@ namespace IVPlugin.UI.Windows.Tabs
 
                 var selectedRace = Enum.GetNames<AnimCodes>().ToList().IndexOf(raceCode);
 
-                var fixedName = Races[selectedRace];
-
-                ImGui.SetNextItemWidth(179);
-                using (var raceDrop = ImRaii.Combo("###race_combo", fixedName))
+                if(_actor.GetModelType() == 0)
                 {
-                    if (raceDrop.Success)
+                    var fixedName = Races[selectedRace];
+
+                    ImGui.SetNextItemWidth(179);
+                    using (var raceDrop = ImRaii.Combo("###race_combo", fixedName))
                     {
-                        foreach (var raceName in Races)
+                        if (raceDrop.Success)
                         {
-                            if (ImGui.Selectable(raceName, raceName == fixedName))
+                            foreach (var raceName in Races)
                             {
+                                if (ImGui.Selectable(raceName, raceName == fixedName))
+                                {
 
-                                var SelectedAnimCode = Enum.GetNames<AnimCodes>().ToList()[Races.ToList().IndexOf(raceName)];
-                                var newRace = Enum.Parse<AnimCodes>(SelectedAnimCode);
-                                _actor.SetRaceAnimCode(newRace);
+                                    var SelectedAnimCode = Enum.GetNames<AnimCodes>().ToList()[Races.ToList().IndexOf(raceName)];
+                                    var newRace = Enum.Parse<AnimCodes>(SelectedAnimCode);
+                                    _actor.SetRaceAnimCode(newRace);
 
+                                }
                             }
                         }
                     }
                 }
+                
 
                 ImGui.SameLine();
                 ImGui.SetCursorPosX(208);
