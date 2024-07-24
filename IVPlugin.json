@@ -1,0 +1,16 @@
+{
+    "Author": "Krisan Thyme & MrPolarbear",
+    "Name": "IllusioVitae",
+    "Punchline": "Illusion of Life",
+    "Description": "Custom Emote Mod Manager and GPose Suite.",
+    "AssemblyVersion": "0.0.0.1",
+    "InternalName": "IllusioVitae",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "gpose",
+        "posing",
+        "animation",
+        "concept matrix",
+        "cmtool"
+    ]
+}
