@@ -4,7 +4,7 @@ Dalamud Plugin for custom FFXIV Animations and Character Customization.
 # Installation
 * Open Dalamud Settings by typing ```/xlsettings``` in chat.
 * Go to the "Experimental" tab.
-* Under Custom Plugin Repositories, add the following: ```https://raw.githubusercontent.com/KrisanThyme/Illusio-Vitae/main/repo.json```
+* Under Custom Plugin Repositories, add the following: ```https://raw.githubusercontent.com/KrisanThyme/Illusio-Vitae/main/IVPlugin/repo.json```
 * Click the ```Save & Close``` Button.
 * Open the "Dalamud Plugin Installer" and search for ```Illusio Vitae```.
 * Click on ```Illusio Vitae``` and select the ```Install``` Button.
