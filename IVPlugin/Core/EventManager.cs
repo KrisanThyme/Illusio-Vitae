@@ -67,7 +67,7 @@ namespace IVPlugin.Core
                     GPoseChange?.Invoke(false);
                 }
 
-                if (IllusioVitae.configuration.ShowDebugData)
+                if (IllusioVitae.InDebug())
                 {
                     validCheck = true;
                     ValidAudioCheck = true;

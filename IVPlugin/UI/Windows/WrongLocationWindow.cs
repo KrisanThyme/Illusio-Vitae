@@ -69,7 +69,7 @@ namespace IVPlugin.UI.Windows
                 ImGui.SetCursorPosX(83);
                 if (ImGui.Button("Continue Loading with World Space"))
                 {
-                    if (DalamudServices.clientState.IsGPosing || IllusioVitae.configuration.ShowDebugData)
+                    if (DalamudServices.clientState.IsGPosing || IllusioVitae.InDebug())
                     {
                         cScene.LoadScene();
                     }

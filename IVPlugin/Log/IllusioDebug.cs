@@ -7,7 +7,7 @@ namespace IVPlugin.Log
     {
         public static void Log(string message, LogType type, bool debugOnly = true)
         {
-            if (debugOnly && !IllusioVitae.configuration.ShowDebugData) return;
+            if (debugOnly && !IllusioVitae.InDebug()) return;
 
             switch (type)
             {
@@ -26,7 +26,7 @@ namespace IVPlugin.Log
 
         public static void ChatLog(string message, XivChatType type, bool debugOnly = false) 
         {
-            if (debugOnly && !IllusioVitae.configuration.ShowDebugData) return;
+            if (debugOnly && !IllusioVitae.InDebug()) return;
 
             XivChatEntry chat = new()
             {

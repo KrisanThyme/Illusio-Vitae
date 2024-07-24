@@ -124,7 +124,7 @@ namespace IVPlugin.UI.Windows
 
             if (ImGui.Begin($"Concept Matrix: Appearance Editor", ref IsOpen, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollWithMouse))
             {
-                if (CurrentActor.GetModelType() != 0 && !IllusioVitae.configuration.ShowDebugData)
+                if (CurrentActor.GetModelType() != 0 && !IllusioVitae.InDebug())
                 {
                     ImGui.TextColored(IVColors.Red, "Customization Limited on Monsters and Demi-Humans!");
 
@@ -155,7 +155,7 @@ namespace IVPlugin.UI.Windows
 
         private static void DrawCharacterUI()
         {
-            using(ImRaii.Disabled(CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.configuration.ShowDebugData)))
+            using(ImRaii.Disabled(CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.InDebug())))
             {
                 DrawRaceUI();
                 ImGui.Separator();
@@ -1222,7 +1222,7 @@ namespace IVPlugin.UI.Windows
             var mhTint = CurrentActor.GetWeaponTint(WeaponSlot.MainHand);
             var ohTint = CurrentActor.GetWeaponTint(WeaponSlot.OffHand);
 
-            using (ImRaii.Disabled(!CurrentActor.IsLoaded() || !EventManager.validCheck && !(IllusioVitae.IsDebug && IllusioVitae.configuration.ShowDebugData)))
+            using (ImRaii.Disabled(!CurrentActor.IsLoaded() || !EventManager.validCheck && !(IllusioVitae.IsDebug && IllusioVitae.InDebug())))
             {
                 ImGui.BeginGroup();
 
@@ -1259,7 +1259,7 @@ namespace IVPlugin.UI.Windows
                     CurrentActor.SetWetness(wetness);
                 }
 
-                using(ImRaii.Disabled(CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.configuration.ShowDebugData)))
+                using(ImRaii.Disabled(CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.InDebug())))
                 {
                     ImGui.SetNextItemWidth(125);
                     if (ImGui.DragFloat("Muscle Tone##muscletone", ref shader.MuscleTone, 0.1f, 0, 3))
@@ -1278,7 +1278,7 @@ namespace IVPlugin.UI.Windows
                 ImGui.EndGroup();
             }
 
-            using(ImRaii.Disabled(!CurrentActor.IsLoaded() || CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.configuration.ShowDebugData)))
+            using(ImRaii.Disabled(!CurrentActor.IsLoaded() || CurrentActor.GetModelType() != 0 && !(IllusioVitae.IsDebug && IllusioVitae.InDebug())))
             {
                 ImGui.SameLine();
 
@@ -1687,7 +1687,7 @@ namespace IVPlugin.UI.Windows
                                     {
                                         if (item.ModelChara.Value.Type == 0 || item.ModelChara.Value.Type == 5) continue;
 
-                                        if (item.ModelChara.Value.Type == 4 && !IllusioVitae.configuration.ShowDebugData) continue;
+                                        if (item.ModelChara.Value.Type == 4 && !IllusioVitae.InDebug()) continue;
 
                                         List<uint> namesIDX = [];
 
@@ -2695,7 +2695,7 @@ namespace IVPlugin.UI.Windows
 
             BearGUI.Text(modelname, .85f);
 
-            if (IllusioVitae.configuration.ShowDebugData)
+            if (IllusioVitae.InDebug())
             {
                 var data = BitConverter.GetBytes(equip.Value);
 
@@ -2993,7 +2993,7 @@ namespace IVPlugin.UI.Windows
 
             BearGUI.Text(modelname, .85f);
 
-            if (IllusioVitae.configuration.ShowDebugData)
+            if (IllusioVitae.InDebug())
             {
                 var data = BitConverter.GetBytes(equip.Value);
 
@@ -3589,7 +3589,7 @@ namespace IVPlugin.UI.Windows
                 CurrentActor.SetFacewear(0, (ushort)glassesID);
             }
 
-            if (IllusioVitae.configuration.ShowDebugData)
+            if (IllusioVitae.InDebug())
             {
                 ImGui.SameLine();
 

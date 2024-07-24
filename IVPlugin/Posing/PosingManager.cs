@@ -88,7 +88,7 @@ namespace IVPlugin.Posing
         {
             if(frozen) 
             {
-                if(!IllusioVitae.configuration.ShowDebugData && !DalamudServices.clientState.IsGPosing)
+                if(!IllusioVitae.InDebug() && !DalamudServices.clientState.IsGPosing)
                 {
                     frozen = false;
                 }

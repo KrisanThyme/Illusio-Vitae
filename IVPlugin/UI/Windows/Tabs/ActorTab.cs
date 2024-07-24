@@ -94,7 +94,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
                     string actorName = actor.GetName();
 
-                    using (ImRaii.Disabled((actor.actorObject?.ObjectKind == ObjectKind.MountType || actor.actorObject?.ObjectKind == ObjectKind.Ornament) && !IllusioVitae.configuration.ShowDebugData))
+                    using (ImRaii.Disabled((actor.actorObject?.ObjectKind == ObjectKind.MountType || actor.actorObject?.ObjectKind == ObjectKind.Ornament) && !IllusioVitae.InDebug()))
                     {
                         selected = ImGui.Selectable($"##{actor.GetName()}{actor.actorObject.ObjectIndex}", selectedActor.actorObject.Address == actor.actorObject.Address, ImGuiSelectableFlags.DontClosePopups);
                     }
@@ -146,7 +146,7 @@ namespace IVPlugin.UI.Windows.Tabs
                     }
 
                     ImGui.SameLine();
-                    if((actor.actorObject?.ObjectKind == ObjectKind.MountType || actor.actorObject?.ObjectKind == ObjectKind.Ornament) && !IllusioVitae.configuration.ShowDebugData)
+                    if((actor.actorObject?.ObjectKind == ObjectKind.MountType || actor.actorObject?.ObjectKind == ObjectKind.Ornament) && !IllusioVitae.InDebug())
                     {
                         ImGui.TextColored(new(.5f, .5f, .5f, 1), actorName);
                     }
@@ -157,7 +157,7 @@ namespace IVPlugin.UI.Windows.Tabs
                     }
                     
 
-                    if (IllusioVitae.IsDebug && IllusioVitae.configuration.ShowDebugData)
+                    if (IllusioVitae.IsDebug && IllusioVitae.InDebug())
                     {
                         ImGui.SameLine();
 
@@ -235,7 +235,7 @@ namespace IVPlugin.UI.Windows.Tabs
                     }
                     else
                     {
-                        if (DalamudServices.TargetManager.Target?.SubKind != 5 || IllusioVitae.configuration.ShowDebugData)
+                        if (DalamudServices.TargetManager.Target?.SubKind != 5 || IllusioVitae.InDebug())
                             ActorManager.Instance.SetUpActor(DalamudServices.TargetManager.Target);
                     }
                 }
@@ -297,7 +297,7 @@ namespace IVPlugin.UI.Windows.Tabs
                 ImGui.BeginDisabled();
             }
 
-            using(ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData))
+            using(ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug()))
             {
                 if (SkeletonOverlay.IsOpen)
                 {
@@ -416,7 +416,7 @@ namespace IVPlugin.UI.Windows.Tabs
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 2.5f);
 
 
-            using (ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData))
+            using (ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug()))
             {
                 if (BearGUI.ImageButton("Save Scene", GameResourceManager.Instance.GetResourceImage("SceneSave.png").ImGuiHandle, new(22, 22)))
                 {
@@ -536,7 +536,7 @@ namespace IVPlugin.UI.Windows.Tabs
                 }
             }
 
-            using (ImRaii.Disabled((_actor == null || !_actor.IsLoaded()) || (!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData)))
+            using (ImRaii.Disabled((_actor == null || !_actor.IsLoaded()) || (!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug())))
             {
                 ImGui.Spacing();
                 ImGui.Separator();
@@ -1082,12 +1082,12 @@ namespace IVPlugin.UI.Windows.Tabs
                     }
                 }
 
-                if (!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData)
+                if (!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug())
                 {
                     ImGui.TextColored(IVColors.Red, "Animation Control is Unavailable Outside of Group Pose");
                 }
 
-                if (IllusioVitae.configuration.ShowDebugData)
+                if (IllusioVitae.InDebug())
                 {
 
                     if(ImGui.CollapsingHeader("Debug"))

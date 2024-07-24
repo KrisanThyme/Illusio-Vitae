@@ -131,7 +131,7 @@ namespace IVPlugin.ActorData
         {
             bool result = _calculateAndApplyOverallSpeedHook.Original(a1);
 
-            if (EventManager.validCheck || IllusioVitae.configuration.ShowDebugData)
+            if (EventManager.validCheck || IllusioVitae.InDebug())
             {
                 if (!DalamudServices.clientState.IsGPosing)
                 {
@@ -174,7 +174,7 @@ namespace IVPlugin.ActorData
         {
             float finalSpeed = speed;
 
-            if (EventManager.validCheck || IllusioVitae.configuration.ShowDebugData)
+            if (EventManager.validCheck || IllusioVitae.InDebug())
             {
                 var owner = Actors.FirstOrDefault(x => x.GetCharacter() == a1->Parent, null);
 

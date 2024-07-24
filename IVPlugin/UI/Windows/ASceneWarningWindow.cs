@@ -77,13 +77,13 @@ namespace IVPlugin.UI.Windows
 
                 if (ImGui.Button("Confirm Settings"))
                 {
-                    if (DalamudServices.clientState.IsGPosing || IllusioVitae.configuration.ShowDebugData)
+                    if (DalamudServices.clientState.IsGPosing || IllusioVitae.InDebug())
                     {
                         WindowsManager.Instance.fileDialogManager.OpenFileDialog("Open Actor Scene", ".ivscene", (Confirm, Path) =>
                         {
                             if (!Confirm) return;
 
-                            if (DalamudServices.clientState.IsGPosing || IllusioVitae.configuration.ShowDebugData)
+                            if (DalamudServices.clientState.IsGPosing || IllusioVitae.InDebug())
                             {
                                 var data = File.ReadAllText(Path);
 

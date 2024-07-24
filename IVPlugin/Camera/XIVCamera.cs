@@ -56,7 +56,7 @@ namespace IVPlugin.Camera
             disableCollision = false;
             if(removeZoomLimits)
             {
-                RemoveZoomLimits();
+                ReinstateZoomLimits();
             }
             
             forceCameraPositon = false;
@@ -105,7 +105,7 @@ namespace IVPlugin.Camera
         {
             var result = _cameraUpdateHook.Original(camera);
 
-            if (DalamudServices.clientState.IsGPosing || IllusioVitae.configuration.ShowDebugData)
+            if (DalamudServices.clientState.IsGPosing || IllusioVitae.InDebug())
             {
                 var currentCam = GetCurrentCamera();
 
@@ -122,7 +122,7 @@ namespace IVPlugin.Camera
 
         private nint CameraCollisionDetour(XIVCameraStruct* camera, Vector3* a2, Vector3* a3, float a4, nint a5, float a6)
         {
-            if (DalamudServices.clientState.IsGPosing || IllusioVitae.configuration.ShowDebugData)
+            if (DalamudServices.clientState.IsGPosing || IllusioVitae.InDebug())
             {
                 if (GetCurrentCamera() == camera && disableCollision)
                 {

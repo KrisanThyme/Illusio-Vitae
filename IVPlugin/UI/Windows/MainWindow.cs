@@ -59,7 +59,7 @@ public static class MainWindow
             {
                 if (ImGui.BeginTabBar("Menu"))
                 {
-                    using (ImRaii.Disabled((!ActorManager.Instance.playerActor.IsLoaded(true) && !IllusioVitae.configuration.ShowDebugData) && !DalamudServices.clientState.IsGPosing))
+                    using (ImRaii.Disabled((!ActorManager.Instance.playerActor.IsLoaded(true) && !IllusioVitae.InDebug()) && !DalamudServices.clientState.IsGPosing))
                     {
                         using (ImRaii.Disabled(!DalamudServices.penumbraServices.CheckAvailablity()))
                         {

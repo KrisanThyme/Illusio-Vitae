@@ -174,7 +174,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
             if (ImGui.CollapsingHeader("Camera Controls"))
             {
-                using (ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData))
+                using (ImRaii.Disabled(!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug()))
                 {
                     CameraDraw();
                 }
@@ -190,7 +190,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
             unsafe
             {
-                if (IllusioVitae.configuration.ShowDebugData)
+                if (IllusioVitae.InDebug())
                 {
                     if (ImGui.CollapsingHeader("Debug"))
                     {
@@ -296,7 +296,7 @@ namespace IVPlugin.UI.Windows.Tabs
                 ResetCameraControls();
             }
 
-            if (!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData)
+            if (!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug())
             {
                 ImGui.TextColored(IVColors.Red, "Camera Control is Unavailable Outside of Group Pose");
             }

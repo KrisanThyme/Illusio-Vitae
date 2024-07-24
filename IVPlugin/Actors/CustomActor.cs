@@ -124,7 +124,7 @@ namespace IVPlugin.ActorData
                     appearanceData.ApplyRaw(customCharStruct, CharaFile.SaveModes.All, out sParams);
                 }
 
-                if(!DalamudServices.clientState.IsGPosing && !IllusioVitae.configuration.ShowDebugData)
+                if(!DalamudServices.clientState.IsGPosing && !IllusioVitae.InDebug())
                 {
                     customGOStruct->TargetableStatus &= ~FFXIVClientStructs.FFXIV.Client.Game.Object.ObjectTargetableFlags.IsTargetable;
                 }

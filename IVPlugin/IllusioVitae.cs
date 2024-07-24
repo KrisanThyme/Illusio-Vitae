@@ -80,6 +80,13 @@ namespace IVPlugin
 
         }
 
+        public static bool InDebug()
+        {
+            if (IsDebug && configuration.ShowDebugData) return true;
+            
+            return false;
+        }
+
         public void Dispose()
         {
             DalamudServices.PluginInterface.SavePluginConfig(configuration);

@@ -58,7 +58,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
             ImGui.Spacing();
 
-            bool debugData = IllusioVitae.configuration.ShowDebugData;
+            bool debugData = IllusioVitae.InDebug();
 
             if (ImGui.Checkbox("Enable Debug Mode", ref debugData))
             {
