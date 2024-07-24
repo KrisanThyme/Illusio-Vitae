@@ -1,17 +1,18 @@
 [
     {
         "Author": "Krisan Thyme & MrPolarbear",
-        "Name": "Illusio Vitae",
+        "Name": "IllusioVitae",
         "Punchline": "",
         "Description": "",
         "InternalName": "IllusioVitae",
-        "AssemblyVersion": "1",
-        "TestingAssemblyVersion": "1",
+        "AssemblyVersion": "1.0",
+        "TestingAssemblyVersion": "1.0",
         "RepoUrl": "https://github.com/KrisanThyme/Illusio-Vitae",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 10,
         "IconUrl": "https://raw.githubusercontent.com/KrisanThyme/Illusio-Vitae/main/IVPlugin/Resources/Image/IVIcon.png",
         "Tags": [
+            "gpose"
         ]
     }
 ]
