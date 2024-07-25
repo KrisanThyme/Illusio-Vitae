@@ -1,6 +1,9 @@
 # Illusio Vitae
 Dalamud Plugin for custom FFXIV Animations and Character Customization.
 
+#Requirements
+You will need [Penumbra](https://github.com/xivdev/Penumbra) for this to work properly
+
 # Installation
 * Open Dalamud Settings by typing ```/xlsettings``` in chat.
 * Go to the "Experimental" tab.
@@ -13,6 +16,12 @@ Dalamud Plugin for custom FFXIV Animations and Character Customization.
 # Authors
 * **MrPolarburr** - Lead Programmer
 * **Krisan Thyme** - Reverse Engineer & Assistant Programmer
+
+# Credits / Special Thanks
+* **Chirp** - Bone Posing and manipulation
+* **Asgard** - Custom Actors and XAT Camera
+* **0ceal0t** - VFX Related Functionality
+* **Penumbra and its devs** - Without this it wouldnt be possible for this plugin to exist
 
 # License
 Illusio Vitae is licensed under the [AGPL-3.0 License](https://github.com/MrPolarburr/IVPlugin/blob/master/LICENSE.md).
