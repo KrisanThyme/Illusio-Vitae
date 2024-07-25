@@ -10,7 +10,8 @@
         "RepoUrl": "https://github.com/KrisanThyme/Illusio-Vitae",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 10,
-        "DownloadLinkInstall": "https://github.com/KrisanThyme/Illusio-Vitae/releases/download/v1.0/IllusioVitae.zip",
+        "DownloadLinkInstall": "https://github.com/KrisanThyme/Illusio-Vitae/releases/download/v1.0.1/IllusioVitae.zip",
+        "DownloadLinkUpdate": "https://github.com/KrisanThyme/Illusio-Vitae/releases/download/v1.0.1/IllusioVitae.zip",
         "IconUrl": "https://raw.githubusercontent.com/KrisanThyme/Illusio-Vitae/main/IVPlugin/Resources/Image/IVIcon.png",
         "Tags": [
             "gpose",
