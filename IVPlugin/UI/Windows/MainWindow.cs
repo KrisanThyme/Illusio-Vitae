@@ -19,20 +19,26 @@ public static class MainWindow
     public static void Show() => IsOpen = true;
     public static void Toggle() => IsOpen = !IsOpen;
     
-    private static bool logLock = false;
+    private static bool LogLock = false;
 
     public static void Draw()
     {
         if (!IsOpen) return;
+
+        if(IllusioVitae.configuration.firstTimeCheck)
+        {
+            FirstTimeWindow.Show();
+            return;
+        }
 
         ChangeLogWindow.TryShow();
 
         var size = new Vector2(-1, -1);
         ImGui.SetNextWindowSize(size, ImGuiCond.FirstUseEver);
 
-        ImGui.SetNextWindowSizeConstraints(new Vector2(395, 0), new Vector2(395, 1080));
+        ImGui.SetNextWindowSizeConstraints(new Vector2(100, 100), new Vector2(600, 1200));
 
-        if (ImGui.Begin($"Illusio Vitae", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.AlwaysAutoResize))
+        if (ImGui.Begin($"Illusio Vitae", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
         {
             if (ImGui.Button("Open Configuration Settings"))
             {

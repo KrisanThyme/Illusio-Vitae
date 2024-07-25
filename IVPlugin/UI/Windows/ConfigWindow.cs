@@ -13,6 +13,7 @@ using IVPlugin.Camera;
 using IVPlugin.Core;
 using IVPlugin.Core.Extentions;
 using IVPlugin.Mods;
+using IVPlugin.Services;
 using IVPlugin.UI;
 using IVPlugin.UI.Helpers;
 using IVPlugin.UI.Windows;
@@ -35,6 +36,8 @@ public static class ConfigWindow
     private static bool aSceneLocalSpace = true;
     private static bool aSceneWarningShow = true;
     private static bool FadeInOnAnimation = true;
+
+    private static bool IVCSRequiresUpdate = false;
     public static void Draw()
     {
         if (!IsOpen) return;
@@ -42,7 +45,7 @@ public static class ConfigWindow
         var size = new Vector2(-1, -1);
         ImGui.SetNextWindowSize(size, ImGuiCond.FirstUseEver);
 
-        ImGui.SetNextWindowSizeConstraints(new Vector2(395, 0), new Vector2(395, 1080));
+        ImGui.SetNextWindowSizeConstraints(new Vector2(395, 0), new Vector2(500, 1080));
 
         NPCHack = IllusioVitae.configuration.UseNPCHack;
         SkeleColors = IllusioVitae.configuration.UseSkeletonColors;
@@ -51,7 +54,7 @@ public static class ConfigWindow
         aSceneWarningShow = IllusioVitae.configuration.ActorSceneWarningShow;
         FadeInOnAnimation = IllusioVitae.configuration.FadeInOnAnimation;
 
-        if (ImGui.Begin($"Illusio Vitae: Configuration Settings", ref IsOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.AlwaysAutoResize))
+        if (ImGui.Begin($"Illusio Vitae: Configuration Settings", ref IsOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
         {
 
             if (ImGui.BeginTabBar("ConfigTabBar"))
@@ -59,13 +62,6 @@ public static class ConfigWindow
                 if (ImGui.BeginTabItem("General"))
                 {
                     GeneralTabDraw();
-
-                    ImGui.EndTabItem();
-                }
-
-                if (ImGui.BeginTabItem("IVCS Settings"))
-                {
-                    ExtraModsDraw();
 
                     ImGui.EndTabItem();
                 }
@@ -105,82 +101,42 @@ public static class ConfigWindow
 
         ImGui.Separator();
 
-        ImGui.Spacing();
-
         if (ImGui.Checkbox("Show Actor Scene World Space Warning", ref aSceneWarningShow))
         {
             IllusioVitae.configuration.ActorSceneWarningShow = aSceneWarningShow;
         }
+
+        ImGui.Spacing();
 
         if (ImGui.Checkbox("Enable NPC Appearance Data for Concept Matrix", ref NPCHack))
         {
             IllusioVitae.configuration.UseNPCHack = NPCHack;
         }
 
+        ImGui.Spacing();
+
         if (ImGui.Checkbox("Enable Skeleton Editor Color Coding", ref SkeleColors))
         {
             IllusioVitae.configuration.UseSkeletonColors = SkeleColors;
         }
 
-        /*
-        if(ImGui.Checkbox("Enable Fade on Playing Animation", ref FadeInOnAnimation))
+        ImGui.Spacing();
+
+        using (ImRaii.Disabled(!DalamudServices.penumbraServices.CheckAvailablity()))
         {
-            IllusioVitae.configuration.FadeInOnAnimation = FadeInOnAnimation;
+
+            if (ImGui.Button("Install IVCS"))
+            {
+                ModManager.Instance.InstallIVCSMod();
+            }
         }
-        */
+
+        ImGui.Spacing();
 
         if (ImGui.Button("Show Changelog"))
         {
             ChangeLogWindow.Show();
         }
-    }
-
-    private static void ExtraModsDraw()
-    {
-        BearGUI.Text("Illusio Vitae Custom Skeleton Settings", 1.1f);
-
-        ImGui.Spacing();
-
-        if (!installIVCS)
-        {
-            if (ImGui.Button("Enable IV Custom Skeletons"))
-            {
-                IllusioVitae.configuration.installIVCS = true;
-
-                ModManager.Instance.EnableIVCSMods();
-
-                foreach (var actor in ActorManager.Instance.Actors)
-                {
-                    actor.Reload();
-                }
-
-                foreach (var actor in ActorManager.Instance.GPoseActors)
-                {
-                    actor.Reload();
-                }
-            }
-        }
-        else
-        {
-            if (ImGui.Button("Disable IV Custom Skeletons"))
-            {
-                IllusioVitae.configuration.installIVCS = false;
-
-                ModManager.Instance.DisableIVCSMods();
-
-                foreach (var actor in ActorManager.Instance.Actors)
-                {
-                    actor.Reload();
-                }
-
-                foreach (var actor in ActorManager.Instance.GPoseActors)
-                {
-                    actor.Reload();
-                }
-            }
-        }
-
-        ImGui.TextColored(IVColors.Red, "Warning: Disabling IVCS will cause game stability issues.");
     }
 
     public static int id = -1;

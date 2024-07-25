@@ -21,19 +21,29 @@ namespace IVPlugin.UI.Windows
         public static void Toggle() => IsOpen = !IsOpen;
         public static bool worldSpace, applyPlayerAppearance = false, useBaseOnly = false;
 
+        public static bool doOnce = false;
+
         public static void Draw()
         {
-            if (!IsOpen) return;
+            if (!IsOpen)
+            {
+                doOnce = true;
+                return;
+            }
 
             ImGui.SetNextWindowSize(new Vector2(395, 0), ImGuiCond.FirstUseEver);
 
-            ImGui.SetNextWindowSizeConstraints(new Vector2(395, 180), new Vector2(395, 250));
+            ImGui.SetNextWindowSizeConstraints(new Vector2(395, 180), new Vector2(500, 350));
 
-            ImGui.SetNextWindowPos(new Vector2((ImGui.GetIO().DisplaySize.X/2) - (395/2), (ImGui.GetIO().DisplaySize.Y / 2) - (250 / 2)));
+            if(doOnce)
+            {
+                ImGui.SetNextWindowPos(new Vector2((ImGui.GetIO().DisplaySize.X / 2) - (395 / 2), (ImGui.GetIO().DisplaySize.Y / 2) - (250 / 2)));
+                doOnce = false;
+            }
 
             worldSpace = !IllusioVitae.configuration.ActorSceneLocalSpace;
 
-            if (ImGui.Begin($"Actor Scene Settings", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.AlwaysAutoResize))
+            if (ImGui.Begin($"Actor Scene Settings", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
             {
                 ImGui.Spacing();
 

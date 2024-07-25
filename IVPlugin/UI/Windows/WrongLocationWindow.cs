@@ -27,15 +27,26 @@ namespace IVPlugin.UI.Windows
 
         private static ActorScene cScene;
 
+        private static bool doOnce;
+
         public static void Draw()
         {
-            if (!IsOpen) return;
+            if (!IsOpen)
+            {
+                doOnce = true;
+                return;
+            }
 
             ImGui.SetNextWindowSize(new Vector2(395, 0), ImGuiCond.FirstUseEver);
 
-            ImGui.SetNextWindowSizeConstraints(new Vector2(395, 230), new Vector2(395, 230));
+            ImGui.SetNextWindowSizeConstraints(new Vector2(395, 230), new Vector2(500, 300));
 
-            ImGui.SetNextWindowPos(new Vector2((ImGui.GetIO().DisplaySize.X/2) - (395/2), (ImGui.GetIO().DisplaySize.Y / 2) - (150 / 2)));
+            if (doOnce)
+            {
+                ImGui.SetNextWindowPos(new Vector2((ImGui.GetIO().DisplaySize.X / 2) - (395 / 2), (ImGui.GetIO().DisplaySize.Y / 2) - (150 / 2)));
+                doOnce = false;
+            }
+            
 
             showWarning = !IllusioVitae.configuration.ActorSceneWarningShow;
 

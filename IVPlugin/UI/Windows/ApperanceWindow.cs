@@ -117,12 +117,12 @@ namespace IVPlugin.UI.Windows
                 shader = outShader;
             }
 
-            var size = new Vector2(1000,1000);
+            var size = new Vector2(475, 900);
             ImGui.SetNextWindowSize(size, ImGuiCond.FirstUseEver);
 
-            ImGui.SetNextWindowSizeConstraints(new (475,500), new Vector2(1000, 1000));
+            ImGui.SetNextWindowSizeConstraints(new (100,100), new Vector2(800, 1200));
 
-            if (ImGui.Begin($"Concept Matrix: Appearance Editor", ref IsOpen, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollWithMouse))
+            if (ImGui.Begin($"Concept Matrix: Appearance Editor", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
             {
                 if (CurrentActor.GetModelType() != 0 && !IllusioVitae.InDebug())
                 {
@@ -2711,13 +2711,13 @@ namespace IVPlugin.UI.Windows
 
                 ImGui.SameLine();
 
-                if (ImGui.Button($"Test##{slot}"))
-                {
-                    if (TryGetTextureForSlot((int)slot, out var textures))
-                    {
-                        ColorSetWindow.Show(textures);
-                    }
-                }
+                //if (ImGui.Button($"Test##{slot}"))
+                //{
+                //    if (TryGetTextureForSlot((int)slot, out var textures))
+                //    {
+                //        ColorSetWindow.Show(textures);
+                //    }
+                //}
             }
 
             if (icon != 0)
@@ -3009,13 +3009,13 @@ namespace IVPlugin.UI.Windows
 
                 ImGui.SameLine();
 
-                if (ImGui.Button("Test"))
-                {
-                    if (TryGetTextureForSlot((int)slot, out var textures))
-                    {
-                        ColorSetWindow.Show(textures);
-                    }
-                }
+                //if (ImGui.Button("Test"))
+                //{
+                //    if (TryGetTextureForSlot((int)slot, out var textures))
+                //    {
+                //        ColorSetWindow.Show(textures);
+                //    }
+                //}
             }
 
             if (icon != 0)

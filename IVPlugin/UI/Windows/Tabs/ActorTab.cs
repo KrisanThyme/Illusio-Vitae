@@ -82,7 +82,7 @@ namespace IVPlugin.UI.Windows.Tabs
                 actors = ActorManager.Instance.Actors;
             }
 
-            if (ImRaii.Child("##ActorList", new Vector2(375, 125), true))
+            if (ImRaii.Child("##ActorList", new Vector2(0, 125), true))
             {
                 foreach (var actor in actors)
                 {

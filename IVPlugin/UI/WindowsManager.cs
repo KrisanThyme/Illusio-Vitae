@@ -46,9 +46,9 @@ namespace IVPlugin.UI
             SkeletonOverlay.Draw();
             ChangeLogWindow.Draw();
             ASceneWarningWindow.Draw();
-            ColorSetWindow.Draw();
             WrongLocationWindow.Draw();
             OverlayHUD.Draw();
+            FirstTimeWindow.Draw();
         }
 
         public void Dispose()

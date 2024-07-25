@@ -13,6 +13,7 @@ using IVPlugin.Log;
 using IVPlugin.Resources;
 using IVPlugin.Services;
 using IVPlugin.UI.Helpers;
+using IVPlugin.Windows;
 using Lumina.Excel.GeneratedSheets;
 using Lumina.Excel.GeneratedSheets2;
 using System;
@@ -29,6 +30,8 @@ namespace IVPlugin.UI.Windows.Tabs
     public static class WorldTab
     {
         private static string camPath = "";
+
+        private static bool hideUI = false, useScale = true;
         public static void Draw()
         {
             bool timeLocked = WorldManager.Instance.IsTimeFrozen;
@@ -36,7 +39,7 @@ namespace IVPlugin.UI.Windows.Tabs
             int dayOfMonth = WorldManager.Instance.DayOfMonth;
 
             BearGUI.Text("Time and Weather Controller", 1.1f);
-
+            ImGui.SetNextItemWidth(250);
             if (ImGui.SliderInt("Time of Day", ref minuteOfDay, 0, 1439, $"{TimeSpan.FromMinutes(minuteOfDay).Hours:D2}:{TimeSpan.FromMinutes(minuteOfDay).Minutes:D2}"))
             {
                 WorldManager.Instance.IsTimeFrozen = true;
@@ -58,6 +61,7 @@ namespace IVPlugin.UI.Windows.Tabs
                 ImGui.SetTooltip("Lock Time");
             }
 
+            ImGui.SetNextItemWidth(250);
             if (ImGui.SliderInt("Day of Month", ref dayOfMonth, 1, 31))
             {
                 WorldManager.Instance.IsTimeFrozen = true;
@@ -349,8 +353,15 @@ namespace IVPlugin.UI.Windows.Tabs
 
                 IllusioCutsceneManager.Instance.CameraPath = camera;
 
-                IllusioCutsceneManager.Instance.StartPlayback(true);
+                IllusioCutsceneManager.Instance.StartPlayback(useScale);
+
+                if (hideUI) MainWindow.Toggle();
             }
+
+
+            ImGui.Checkbox("Hide UI On Play", ref hideUI);
+
+            ImGui.Checkbox("Enable Race Scaling Offsets For Camera", ref useScale);
 
             ImGui.InputFloat3("Scale", ref IllusioCutsceneManager.Instance.CameraSettings.Scale);
             ImGui.InputFloat3("Offset", ref IllusioCutsceneManager.Instance.CameraSettings.Offset);

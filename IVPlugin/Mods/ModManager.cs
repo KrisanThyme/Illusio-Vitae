@@ -9,7 +9,6 @@ using FFXIVClientStructs.Havok;
 using ImGuizmoNET;
 using IVPlugin.ActorData;
 using IVPlugin.Actors;
-using IVPlugin.Audio;
 using IVPlugin.Commands;
 using IVPlugin.Core;
 using IVPlugin.Core.Extentions;
@@ -58,6 +57,9 @@ namespace IVPlugin.Mods
         private List<string> internalNames = new();
         public string activeModName = "";
 
+        private Guid lastUsedCollection;
+        private int lastUsedPrio = 1;
+
         public Dictionary<string, List<ModVFXInfo>> ActiveModVFX { get; private set; } = new Dictionary<string, List<ModVFXInfo>>();
 
         public List<nint> activeAudioVFXs = new List<nint>();
@@ -98,8 +100,8 @@ namespace IVPlugin.Mods
 
             WriteFilesToDisk();
 
-            if(IllusioVitae.configuration.installIVCS)
-                EnableIVCSMods(true);
+            if(IllusioVitae.configuration.installIVCS && !IllusioVitae.configuration.firstTimeCheck)
+                //EnableIVCSMods(true);
 
             DalamudServices.framework.Update += ModManagerUpdate;
 
@@ -213,10 +215,10 @@ namespace IVPlugin.Mods
 
             Directory.CreateDirectory(PluginFileDirectory);
 
-            if(Directory.Exists(Path.Combine(PluginFileDirectory, "IVCS")))
-                Directory.Delete(Path.Combine(PluginFileDirectory, "IVCS"), true);
+            if(Directory.Exists(Path.Combine(PluginFileDirectory, "Mods")))
+                Directory.Delete(Path.Combine(PluginFileDirectory, "Mods"), true);
 
-            Directory.CreateDirectory(Path.Combine(PluginFileDirectory, "IVCS"));
+            Directory.CreateDirectory(Path.Combine(PluginFileDirectory, "Mods"));
 
             if (Directory.Exists(Path.Combine(PluginFileDirectory, "Animations")))
                 Directory.Delete(Path.Combine(PluginFileDirectory, "Animations"), true);
@@ -228,24 +230,9 @@ namespace IVPlugin.Mods
 
             Directory.CreateDirectory(Path.Combine(PluginFileDirectory, "Chara"));
 
-            int SkeleCount = 18;
+            var modPack = GameResourceManager.Instance.GetResourceByteFile($"Mods.IVCS.pmp");
 
-            for(var i = 1; i <= SkeleCount; i++)
-            {
-                //if (i == 16) continue; //Female Hroth
-
-                string fileName = $"skl_c{i:D2}01b0001.sklb";
-
-                var file = GameResourceManager.Instance.GetResourceByteFile($"IVCS.{fileName}");
-
-                File.WriteAllBytes(Path.Combine(PluginFileDirectory, "IVCS", fileName), file);
-
-                
-            }
-
-            var deforms = GameResourceManager.Instance.GetResourceByteFile($"IVCS.IVCSDeforms.pbd");
-
-            File.WriteAllBytes(Path.Combine(PluginFileDirectory, "IVCS","IVCSDeforms.pbd"), deforms);
+            File.WriteAllBytes(Path.Combine(PluginFileDirectory, "Mods", "IVCS.pmp"), modPack);
 
             var weaponTMB = GameResourceManager.Instance.GetResourceByteFile($"TMB.battle_idle.tmb");
 
@@ -259,32 +246,33 @@ namespace IVPlugin.Mods
             }
         }
 
-        public void EnableIVCSMods(bool reload = false)
+        public void InstallIVCSMod(bool reload = false)
         {
-            Dictionary<string, string> modMeta = new();
+            if (!DalamudServices.penumbraServices.CheckAvailablity()) return;
+           
+            new InstallMod(DalamudServices.PluginInterface).Invoke(Path.Combine(PluginFileDirectory, "Mods", "IVCS.pmp"));
 
-            for (var i = 1; i <= 18; i++)
-            {
-                string fileName = $"skl_c{i:D2}01b0001.sklb";
-                modMeta.Add($"chara/human/c{i:D2}01/skeleton/base/b0001/skl_c{i:D2}01b0001.sklb", Path.Combine(PluginFileDirectory, "IVCS", fileName));
-            }
-
-            modMeta.Add("chara/xls/boneDeformer/human.pbd", Path.Combine(PluginFileDirectory, "IVCS", "IVCSDeforms.pbd"));
-
-            //penumbra is too agressive with its deformer
-            if (DalamudServices.penumbraServices.CheckAvailablity())
-            {
-                new AddTemporaryModAll(DalamudServices.PluginInterface).Invoke(ivcsModName, modMeta, string.Empty, 999);
-            }
+            //lastUsedCollection = IllusioVitae.configuration.SelectedCollection;
+            //lastUsedPrio = IllusioVitae.configuration.defaultPriority;
 
             IVCSEnabled = true;
         }
 
-        public void DisableIVCSMods()
+        public void UpdateIVCSMod()
         {
             if (!IVCSEnabled) return;
 
-            new Penumbra.Api.IpcSubscribers.RemoveTemporaryModAll(DalamudServices.PluginInterface).Invoke(ivcsModName, int.MaxValue);
+            DisableIVCSMods();
+            //EnableIVCSMods();
+        }
+
+        public void DisableIVCSMods()
+        {
+            if (!DalamudServices.penumbraServices.CheckAvailablity()) return;
+
+            if (!IVCSEnabled) return;
+
+            new RemoveTemporaryMod(DalamudServices.PluginInterface).Invoke(ivcsModName, lastUsedCollection, lastUsedPrio);
         }
 
         public IVMod GetMod(string name)
@@ -1252,9 +1240,9 @@ namespace IVPlugin.Mods
         public void Dispose()
         {
 
-            if (DalamudServices.penumbraServices.CheckAvailablity() && IVCSEnabled)
+            if (DalamudServices.penumbraServices.CheckAvailablity())
             {
-                new RemoveTemporaryModAll(DalamudServices.PluginInterface).Invoke(ivcsModName, 999);
+                DisableIVCSMods();
             }
 
             DalamudServices.framework.Update -= ModManagerUpdate;

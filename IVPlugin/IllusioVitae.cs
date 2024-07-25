@@ -7,8 +7,6 @@ using IVPlugin.ActorData;
 using IVPlugin.Services;
 using IVPlugin.Commands;
 using IVPlugin.Mods;
-using IVPlugin.Audio.Hooks;
-using IVPlugin.Audio;
 using IVPlugin.VFX;
 using System.Diagnostics;
 using IVPlugin.Posing;

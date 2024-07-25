@@ -46,7 +46,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
         private static void DrawEmoteTab()
         {
-            if (ImRaii.Child("##EmoteModList", new Vector2(375, 150), true))
+            if (ImRaii.Child("##EmoteModList", new Vector2(0, 150), true))
             {
                 foreach (var mod in ModManager.Instance.mods.Values)
                 {
@@ -163,7 +163,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
                 ImGui.Text("Command List:");
 
-                using(ImRaii.Child("##EmoteCommandsChild", new(375, 87.5f), true))
+                using(ImRaii.Child("##EmoteCommandsChild", new(0, 87.5f), true))
                 {
                     XIVActor playerActor = ActorManager.Instance.playerActor;
 

@@ -43,9 +43,9 @@ namespace IVPlugin.UI.Windows
             var size = new Vector2(-1, -1);
             ImGui.SetNextWindowSize(size, ImGuiCond.FirstUseEver);
 
-            ImGui.SetNextWindowSizeConstraints(new Vector2(700, 700), new Vector2(700, 700));
+            ImGui.SetNextWindowSizeConstraints(new Vector2(700, 700), new Vector2(1000, 1000));
 
-            if (ImGui.Begin($"Illusio Vitae ChangeLog", ref IsOpen, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
+            if (ImGui.Begin($"Illusio Vitae ChangeLog", ref IsOpen, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
             {
                 using (ImRaii.Child("##changelogCHILD", new(0, 620)))
                 {

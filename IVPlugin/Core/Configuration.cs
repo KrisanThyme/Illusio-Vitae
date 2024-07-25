@@ -29,5 +29,10 @@ namespace IVPlugin.Core
         public CustomActorInfo[] PresetActors { get; set; } = new CustomActorInfo[0];
 
         public int LastSeenVersion = -1;
+
+        public bool firstTimeCheck { get; set; } = true;
+
+        public Guid SelectedCollection = Guid.Empty;
+        public int defaultPriority = 1;
     }
 }
