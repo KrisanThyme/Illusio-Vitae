@@ -1,7 +1,7 @@
 # Illusio Vitae
 Dalamud Plugin for custom FFXIV Animations and Character Customization.
 
-#Requirements
+# Requirements
 You will need [Penumbra](https://github.com/xivdev/Penumbra) for this to work properly
 
 # Installation
