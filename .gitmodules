@@ -1,0 +1,3 @@
+[submodule "penumbra"]
+	path = penumbra
+	url = https://github.com/Ottermandias/Penumbra.String
