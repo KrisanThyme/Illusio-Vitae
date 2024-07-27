@@ -49,6 +49,7 @@ namespace IVPlugin.UI
             WrongLocationWindow.Draw();
             OverlayHUD.Draw();
             FirstTimeWindow.Draw();
+            ModCreationWindow.Draw();
         }
 
         public void Dispose()

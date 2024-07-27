@@ -66,16 +66,6 @@ namespace IVPlugin
             posingManager = new();
             gposeManager = new();
             windowsManager = new(pluginInterface);
-
-            DalamudServices.framework.RunOnTick(() =>
-            {
-                foreach (var actor in actorManager.Actors)
-                {
-                    actor.Reload();
-                }
-            }, TimeSpan.FromSeconds(1));
-            
-
         }
 
         public static bool InDebug()

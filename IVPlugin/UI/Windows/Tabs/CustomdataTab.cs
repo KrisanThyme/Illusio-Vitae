@@ -56,9 +56,21 @@ namespace IVPlugin.UI.Windows.Tabs
                 ImGui.EndChildFrame();
             }
 
-            ImGui.SetCursorPosX(ImGui.GetWindowContentRegionMax().X / 2 - 45);
+            ImGui.SetCursorPosX(ImGui.GetWindowContentRegionMax().X / 2 - 60);
 
             ImGui.BeginGroup();
+
+            if(BearGUI.FontButton("createmod", FontAwesomeIcon.FileCirclePlus.ToIconString()))
+            {
+                ModCreationWindow.Show();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Create Custom Emote");
+            }
+
+            ImGui.SameLine();
 
             using (ImRaii.PushFont(UiBuilder.IconFont))
             {
@@ -314,7 +326,7 @@ namespace IVPlugin.UI.Windows.Tabs
 
                     if (selectedModData.emote.cameraPath != "" && selectedModData.emote.cameraPath != null)
                     {
-                        if (ImGui.Checkbox("Enable Camera", ref CameraEnabled))
+                        if (ImGui.Checkbox("Enable Camera (Gpose Only)", ref CameraEnabled))
                         {
                             ModManager.Instance.ToggleCameraStatus(selectedMod);
                         }

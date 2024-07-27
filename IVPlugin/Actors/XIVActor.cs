@@ -39,6 +39,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using Dalamud.Interface.FontIdentifier;
 using FFXIVClientStructs.FFXIV.Common.Lua;
 using FFXIVClientStructs.FFXIV.Client.Game.MJI;
+using IVPlugin.Gpose;
 
 namespace IVPlugin.ActorData
 {
@@ -78,7 +79,7 @@ namespace IVPlugin.ActorData
         public bool scaleLock = false;
         private float customScale;
 
-        private bool RestoreOutfit = false, RestoreWeapons = false;
+        private bool RestoreOutfit = false, RestoreWeapons = false, RevertTime = false, RevertMonth = false, RevertSkybox = false;
 
         private IVTracklist currentTracklist = null;
 
@@ -1102,21 +1103,28 @@ namespace IVPlugin.ActorData
             switch(track.Type)
             {
                 case TrackType.Expression:
+                    if (track.Value == null) return;
                     PlayAnimation((int)track.Value);
                     break;
                 case TrackType.Transparency:
+                    if (track.Value == null) return;
                     SetTransparency((float)track.Value);
                     break;
                 case TrackType.FadeIn:
+                    if (track.Value == null) return;
                     FadeIn((int)track.Value);
                     break;
                 case TrackType.FadeOut:
+                    if (track.Value == null) return;
                     FadeOut((int)track.Value);
                     break;
                 case TrackType.Outfit:
                     try
                     {
                         var filePath = Path.Combine(ModManager.Instance.ActiveModPath, track.sValue);
+
+                        if (!File.Exists(filePath)) return;
+
                         RestoreOutfit = true;
                         JsonHandler.Deserialize<CharaFile>(File.ReadAllText(filePath)).Apply(this, (CharaFile.SaveModes.EquipmentGear | CharaFile.SaveModes.EquipmentAccessories));
 
@@ -1129,6 +1137,23 @@ namespace IVPlugin.ActorData
                     RestoreWeapons = true;
                     SetWeaponSlot(WeaponSlot.MainHand, new() { Id = 301, Variant = 1, Type = 31 }, temp: true);
                     SetWeaponSlot(WeaponSlot.OffHand, new() { Id = 351, Variant = 1, Type = 31 }, temp: true);
+                    break;
+                case TrackType.ChangeSkybox:
+                    if (track.Value == null) return;
+                    WorldManager.Instance.CurrentSky = (uint)track.Value;
+                    RevertSkybox = true;
+                    break;
+                case TrackType.ChangeTime:
+                    if (track.Value == null) return;
+                    WorldManager.Instance.IsTimeFrozen = true;
+                    WorldManager.Instance.EorzeaTime = (uint)track.Value;
+                    RevertTime = true;
+                    break;
+                case TrackType.ChangeMonth:
+                    if (track.Value == null) return;
+                    WorldManager.Instance.IsTimeFrozen = true;
+                    WorldManager.Instance.DayOfMonth = (int)track.Value;
+                    RevertMonth = true;
                     break;
             }
         }
@@ -1145,6 +1170,20 @@ namespace IVPlugin.ActorData
             if((recordedPos != actorObject?.Position || changedID != currentBaseAnimation) && !DoNotInterupt)
             {
                 IllusioDebug.Log("Animation Cancelled", LogType.Debug);
+
+                if (RevertSkybox)
+                {
+                    WorldManager.Instance.resetSky();
+                    RevertSkybox = false;
+                }
+
+                if (RevertTime || RevertMonth)
+                {
+                    WorldManager.Instance.IsTimeFrozen = false;
+                    
+                    RevertTime = false;
+                    RevertMonth = false;
+                }
 
                 PlayAnimation(0);
 

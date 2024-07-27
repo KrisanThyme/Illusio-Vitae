@@ -292,7 +292,7 @@ namespace IVPlugin.Mods.Structs
 
     public enum ModCatagory { Global, Male, Female, Straight, Bisexual, Gay, Lesbian}
 
-    public enum TrackType { Expression, Transparency, FadeIn, FadeOut, Outfit, Scale, HideWeapons}
+    public enum TrackType { Expression, Transparency, FadeIn, FadeOut, Outfit, Scale, HideWeapons, ChangeTime, ChangeMonth, ChangeSkybox}
 
     public enum VFXType {actorVFX, staticVFX}
 
@@ -317,6 +317,8 @@ namespace IVPlugin.Mods.Structs
         C1601 = 32768,
         C1701 = 65536,
         C1801 = 131072,
+
+        all = C0101 | C0201 | C0301 | C0401 | C0501 | C0601 | C0701 | C0801 | C0901 | C1001 | C1101 | C1201 | C1301 | C1401 | C1501 | C1601 | C1701 | C1801,
     }
     [Flags]
     public enum EmoteType : byte {Full, Additive}
