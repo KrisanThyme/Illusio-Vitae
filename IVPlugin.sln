@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IVPlugin", "IVPlugin\IVPlug
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubModules", "SubModules", "{24C7C0A2-570B-44C1-991A-875923FA4E6B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penumbra.String", "Penumbra.String\Penumbra.String.csproj", "{4AA25594-EA43-42DF-A593-0B2DA90DE612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penumbra.String", "Penumbra.String\Penumbra.String.csproj", "{50D13EBB-53B8-4B27-A321-32C142931A9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,20 +25,20 @@ Global
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|Any CPU.Build.0 = Release|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.ActiveCfg = Release|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.Build.0 = Release|x64
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Debug|x64.Build.0 = Debug|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Release|x64.ActiveCfg = Release|Any CPU
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612}.Release|x64.Build.0 = Release|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Debug|x64.Build.0 = Debug|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Release|x64.ActiveCfg = Release|Any CPU
+		{50D13EBB-53B8-4B27-A321-32C142931A9E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4AA25594-EA43-42DF-A593-0B2DA90DE612} = {24C7C0A2-570B-44C1-991A-875923FA4E6B}
+		{50D13EBB-53B8-4B27-A321-32C142931A9E} = {24C7C0A2-570B-44C1-991A-875923FA4E6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B17E85B1-5F60-4440-9F9A-3DDE877E8CDF}

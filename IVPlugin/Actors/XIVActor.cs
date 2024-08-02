@@ -1000,6 +1000,11 @@ namespace IVPlugin.ActorData
             }
         }
 
+        public unsafe void PlayExpression(int animID)
+        {
+            GetCharacter()->Timeline.TimelineSequencer.PlayTimeline((ushort)animID);
+        }
+
         public unsafe void PlayAnimation(int AnimOvveride = 0, bool loop = false, IVTracklist tracklist = null, bool resetAnim = true)
         {
             var charStruct = GetCharacter();
@@ -1104,7 +1109,7 @@ namespace IVPlugin.ActorData
             {
                 case TrackType.Expression:
                     if (track.Value == null) return;
-                    PlayAnimation((int)track.Value);
+                    PlayExpression((int)track.Value);
                     break;
                 case TrackType.Transparency:
                     if (track.Value == null) return;

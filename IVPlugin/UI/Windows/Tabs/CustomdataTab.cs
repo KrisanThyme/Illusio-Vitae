@@ -60,17 +60,17 @@ namespace IVPlugin.UI.Windows.Tabs
 
             ImGui.BeginGroup();
 
-            if(BearGUI.FontButton("createmod", FontAwesomeIcon.FileCirclePlus.ToIconString()))
-            {
-                ModCreationWindow.Show();
-            }
+            //if(BearGUI.FontButton("createmod", FontAwesomeIcon.FileCirclePlus.ToIconString()))
+            //{
+            //    ModCreationWindow.Show();
+            //}
 
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip("Create Custom Emote");
-            }
+            //if (ImGui.IsItemHovered())
+            //{
+            //    ImGui.SetTooltip("Create Custom Emote");
+            //}
 
-            ImGui.SameLine();
+            //ImGui.SameLine();
 
             using (ImRaii.PushFont(UiBuilder.IconFont))
             {
@@ -474,11 +474,20 @@ namespace IVPlugin.UI.Windows.Tabs
 
             if(ModManager.Instance.mods.Count < 7)
             {
-                ImGui.SetCursorPosX(275);
+                var x = ImGui.GetWindowContentRegionMax().X;
+                if(x > ImGui.CalcTextSize("XXXXXXXXXXXXXXXXXXXXXXXXX").X + 80)
+                    ImGui.SetCursorPosX((x - 80));
+                else
+                    ImGui.SetCursorPosX(ImGui.CalcTextSize("XXXXXXXXXXXXXXXXXXXXXXXXX").X);
             }
             else
             {
-                ImGui.SetCursorPosX(265);
+                var x = ImGui.GetWindowContentRegionMax().X;
+
+                if (x > ImGui.CalcTextSize("XXXXXXXXXXXXXXXXXXXXXXXXX").X + 90)
+                    ImGui.SetCursorPosX((x-90));
+                else
+                    ImGui.SetCursorPosX(ImGui.CalcTextSize("XXXXXXXXXXXXXXXXXXXXXXXXX").X);
             }
 
             if (mod.error != ErrorType.none)

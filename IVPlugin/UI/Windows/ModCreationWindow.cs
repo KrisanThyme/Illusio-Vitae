@@ -2,6 +2,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using IVPlugin.ActorData;
+using IVPlugin.Json;
 using IVPlugin.Mods;
 using IVPlugin.Mods.Structs;
 using IVPlugin.Resources;
@@ -30,6 +31,7 @@ namespace IVPlugin.UI.Windows
 
         public static string ModName = string.Empty, ModAuthor = string.Empty, CamPath = string.Empty;
         public static ModCatagory selectedCatagory = ModCatagory.Global;
+        public static bool allowNPC = true;
 
         public static int emoteCount = 0;
 
@@ -64,7 +66,7 @@ namespace IVPlugin.UI.Windows
             ImGui.Text("Mod Author:");
             ImGui.SameLine(90);
             ImGui.SetNextItemWidth(100);
-            ImGui.InputText("##ModAuthorInput", ref ModName, 200);
+            ImGui.InputText("##ModAuthorInput", ref ModAuthor, 200);
             ImGui.Spacing();
             ImGui.Text("Camera File:");
             ImGui.SameLine(90);
@@ -80,6 +82,10 @@ namespace IVPlugin.UI.Windows
                     CamPath = FilePath;
                 });
             }
+            ImGui.Text("Allow NPCS");
+            ImGui.SameLine(90);
+            ImGui.SetNextItemWidth(100);
+            ImGui.Checkbox("##NPCCheck", ref allowNPC);
             ImGui.EndGroup();
 
             ImGui.SameLine(300);
@@ -116,6 +122,13 @@ namespace IVPlugin.UI.Windows
             if (ImGui.Button("Import pmp file"))
             {
                 ParsePMP();
+            }
+
+            ImGui.SameLine();
+
+            if(ImGui.Button("Export IVMP"))
+            {
+                CreateIVMP();
             }
         }
 
@@ -195,11 +208,294 @@ namespace IVPlugin.UI.Windows
                 }
             });
         }
+
+        public static void CreateIVMP()
+        {
+            CustomEmote file = new();
+
+            file.Name = ModName;
+            file.Author = ModAuthor;
+            file.cameraPath = CamPath;
+            file.allowNPC = allowNPC;
+            file.category = selectedCatagory;
+
+            file.emoteData = new();
+
+            file.SharedResources = new();
+
+            foreach (var path in sharedResources.paths)
+            {
+                if (string.IsNullOrEmpty(path.GamePath) || string.IsNullOrEmpty(path.LocalPath))
+                {
+                    //TODO
+                    //MessageBox.Show("Unfilled Fields detected in shared resources please either fix or remove", "Warning", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    return;
+                }
+
+                file.SharedResources.Add(new() { GamePath = path.GamePath, LocalPath = path.LocalPath });
+            }
+
+            for (var i = 0; i < emotes.Count; i++)
+            {
+                ModEmoteTab currentEmoteData = emotes[i];
+
+                CustomEmoteData tempData = new();
+
+                tempData.emoteCommand = currentEmoteData.Command;
+
+                if (currentEmoteData.Command is null)
+                {
+                    //MessageBox.Show($"Emote #{i + 1} is missing an Emote Command!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                tempData.emoteID = currentEmoteData.animID;
+                tempData.isLooping = currentEmoteData.isLooping;
+                tempData.disableWeapon = currentEmoteData.hideWeapon;
+                tempData.emoteType = currentEmoteData.currentType;
+                tempData.tracklistPath = currentEmoteData.tracklistPath;
+
+                tempData.dataPaths = new();
+                tempData.vfxData = new();
+
+                for (var x = 0; x < currentEmoteData.paths.Count; x++)
+                {
+                    DataPathsUI currentPaths = currentEmoteData.paths[x];
+
+                    if (string.IsNullOrEmpty(currentPaths.GamePath) && string.IsNullOrEmpty(currentPaths.LocalPath))
+                    {
+                        //MessageBox.Show($"Emote #{i + 1}, Data Path #{x + i} is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(currentPaths.GamePath) && !string.IsNullOrEmpty(currentPaths.LocalPath))
+                    {
+                        //MessageBox.Show($"Emote #{i + 1}, Data Path #{x + i} is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    if (!string.IsNullOrEmpty(currentPaths.GamePath) && string.IsNullOrEmpty(currentPaths.LocalPath))
+                    {
+                        //MessageBox.Show($"Emote #{i + 1}, Data Path #{x + i} is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+
+                    DataPaths tempPaths = new()
+                    {
+                        GamePath = currentPaths.GamePath,
+                        LocalPath = currentPaths.LocalPath,
+                        validRaces = currentPaths.validRaces,
+                    };
+
+                    tempData.dataPaths.Add(tempPaths);
+                }
+
+                for (var x = 0; x < currentEmoteData.vFXDatas.Count; x++)
+                {
+                    var currentVFXData = currentEmoteData.vFXDatas[x];
+
+                    CustomVFXData tempVFXData = new()
+                    {
+                        VFXType = currentVFXData.vfxType,
+                        validRaces = currentVFXData.validRaces,
+                    };
+
+                    tempVFXData.vfxDatapaths = new();
+
+                    for (var y = 0; y < currentVFXData.vfxPaths.Count; y++)
+                    {
+                        var currentVFXPaths = currentVFXData.vfxPaths[y];
+
+                        if (string.IsNullOrEmpty(currentVFXPaths.GamePath) && string.IsNullOrEmpty(currentVFXPaths.LocalPath))
+                        {
+                            //MessageBox.Show($"Emote #{i + 1}, VFX #{x + i} Path #{y + i}is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        if (string.IsNullOrEmpty(currentVFXPaths.GamePath) && !string.IsNullOrEmpty(currentVFXPaths.LocalPath))
+                        {
+                            //MessageBox.Show($"Emote #{i + 1}, VFX #{x + i} Path #{y + i}is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        if (!string.IsNullOrEmpty(currentVFXPaths.GamePath) && string.IsNullOrEmpty(currentVFXPaths.LocalPath))
+                        {
+                            //MessageBox.Show($"Emote #{i + 1}, VFX #{x + i} Path #{y + i}is missing information!", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        DataPaths vfxDataPath = new()
+                        {
+                            GamePath = currentVFXPaths.GamePath,
+                            LocalPath = currentVFXPaths.LocalPath,
+                        };
+
+                        tempVFXData.vfxDatapaths.Add(vfxDataPath);
+                    }
+
+
+                    tempData.vfxData.Add(tempVFXData);
+                }
+
+                file.emoteData.Add(tempData);
+            }
+
+            WindowsManager.Instance.fileDialogManager.SaveFileDialog("Select a location to Save the Illusio Vitae Modpack", ".ivmp", $"NewMod.ivmp", ".ivmp", (Confirm, FilePath) =>
+            {
+                if (!Confirm) return;
+                WriteIVMP(file, Path.GetDirectoryName(FilePath) + "\\" + Path.GetFileNameWithoutExtension(FilePath) + ".ivmp");
+            });
+        }
+
+        public static void WriteIVMP(CustomEmote data, string savePath)
+        {
+            if (File.Exists(savePath)) { File.Delete(savePath); }
+
+            try
+            {
+                using (ZipArchive archive = ZipFile.Open(savePath, ZipArchiveMode.Create))
+                {
+                    for (var i = 0; i < data.SharedResources.Count; i++)
+                    {
+                        if (!string.IsNullOrEmpty(data.SharedResources[i].LocalPath))
+                        {
+                            archive.CreateEntryFromFile(data.SharedResources[i].LocalPath, $"Shared/" + Path.GetFileName(data.SharedResources[i].LocalPath));
+                        }
+
+                        DataPaths resourceData = data.SharedResources[i];
+
+                        resourceData.LocalPath = $"Shared/" + Path.GetFileName(data.SharedResources[i].LocalPath);
+
+                        data.SharedResources[i] = resourceData;
+                    }
+
+                    for (var i = 0; i < data.emoteData.Count; i++)
+                    {
+                        if (!string.IsNullOrEmpty(data.emoteData[i].tracklistPath))
+                        {
+                            var tracklist = JsonHandler.Deserialize<IVTracklist>(File.ReadAllText(data.emoteData[i].tracklistPath));
+
+                            for (var x = 0; x < tracklist.tracks.Count; x++)
+                            {
+                                if (tracklist.tracks[x].Type == TrackType.Outfit)
+                                {
+                                    if (!string.IsNullOrEmpty(tracklist.tracks[x].sValue))
+                                    {
+                                        archive.CreateEntryFromFile(tracklist.tracks[x].sValue, $"Mod{i}/" + Path.GetFileName(tracklist.tracks[x].sValue));
+
+                                        var tempTrack = tracklist.tracks[x];
+                                        tempTrack.sValue = $"Mod{i}/" + Path.GetFileName(tracklist.tracks[x].sValue);
+
+                                        tracklist.tracks[x] = tempTrack;
+                                    }
+                                }
+                            }
+
+                            var entry = archive.CreateEntry($"Mod{i}/" + Path.GetFileName(data.emoteData[i].tracklistPath));
+
+                            var fixedTracklist = JsonHandler.Serialize(tracklist);
+
+                            using (var stream = entry.Open())
+                            {
+                                stream.Write(Encoding.ASCII.GetBytes(fixedTracklist));
+                            };
+
+                            CustomEmoteData tempData = data.emoteData[i];
+
+                            tempData.tracklistPath = $"Mod{i}/" + Path.GetFileName(data.emoteData[i].tracklistPath);
+
+                            data.emoteData[i] = tempData;
+                        }
+
+                        for (var ii = 0; ii < data.emoteData[i].dataPaths.Count; ii++)
+                        {
+                            if (!string.IsNullOrEmpty(data.emoteData[i].dataPaths[ii].LocalPath))
+                            {
+                                archive.CreateEntryFromFile(data.emoteData[i].dataPaths[ii].LocalPath, $"Mod{i}/" + Path.GetFileName(data.emoteData[i].dataPaths[ii].LocalPath));
+                            }
+
+                            DataPaths emoteData = data.emoteData[i].dataPaths[ii];
+
+                            emoteData.LocalPath = $"Mod{i}/" + Path.GetFileName(data.emoteData[i].dataPaths[ii].LocalPath);
+
+                            data.emoteData[i].dataPaths[ii] = emoteData;
+                        }
+
+                        for (var ii = 0; ii < data.emoteData[i].vfxData.Count; ii++)
+                        {
+                            for (var x = 0; x < data.emoteData[i].vfxData[ii].vfxDatapaths.Count; x++)
+                            {
+                                if (!string.IsNullOrEmpty(data.emoteData[i].vfxData[ii].vfxDatapaths[x].LocalPath))
+                                {
+                                    archive.CreateEntryFromFile(data.emoteData[i].vfxData[ii].vfxDatapaths[x].LocalPath, $"VFX{i}/SubVFX{ii}/" + Path.GetFileName(data.emoteData[i].vfxData[ii].vfxDatapaths[x].LocalPath));
+                                }
+
+                                DataPaths vfxData = data.emoteData[i].vfxData[ii].vfxDatapaths[x];
+
+                                vfxData.LocalPath = $"VFX{i}/SubVFX{ii}/" + Path.GetFileName(data.emoteData[i].vfxData[ii].vfxDatapaths[x].LocalPath);
+
+                                data.emoteData[i].vfxData[ii].vfxDatapaths[x] = vfxData;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(data.cameraPath))
+                    {
+                        archive.CreateEntryFromFile(data.cameraPath, "Camera/" + Path.GetFileName(data.cameraPath));
+
+                        data.cameraPath = $"Camera/{Path.GetFileName(data.cameraPath)}";
+                    }
+
+                    CustomBGMdata bgmData = new();
+
+                    if (!string.IsNullOrEmpty(data.bgmData.vfxPath))
+                    {
+                        archive.CreateEntryFromFile(data.bgmData.vfxPath, "BGM/" + Path.GetFileName(data.bgmData.vfxPath));
+
+                        bgmData.vfxPath = $"BGM/{Path.GetFileName(data.bgmData.vfxPath)}";
+                    }
+
+                    if (!string.IsNullOrEmpty(data.bgmData.scdPath))
+                    {
+                        archive.CreateEntryFromFile(data.bgmData.scdPath, "BGM/" + Path.GetFileName(data.bgmData.scdPath));
+
+                        bgmData.scdPath = $"BGM/{Path.GetFileName(data.bgmData.scdPath)}";
+                    }
+
+                    if (!string.IsNullOrEmpty(data.bgmData.orcScdPath))
+                    {
+                        archive.CreateEntryFromFile(data.bgmData.orcScdPath, "BGM/" + Path.GetFileName(data.bgmData.orcScdPath));
+
+                        bgmData.orcScdPath = $"BGM/{Path.GetFileName(data.bgmData.orcScdPath)}";
+                    }
+
+
+                    data.bgmData = bgmData;
+
+                    var jsonFile = archive.CreateEntry("meta.data");
+
+                    using (Stream st = jsonFile.Open())
+                    {
+                        using (StreamWriter sw = new StreamWriter(st))
+                        {
+                            sw.Write(JsonHandler.Serialize(data));
+                        }
+                    }
+
+                    //MessageBox.Show("Task completed successfuly.", "Task Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch
+            {
+                //MessageBox.Show("Files are Missing or destination IVMP is in use, Task could not be Completed.", "Task Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 
     public class ModSharedResourceTab
     {
-        public List<DataPaths> paths = new List<DataPaths>();
+        public List<DataPathsUI> paths = new List<DataPathsUI>();
 
         public void Draw()
         {
@@ -240,7 +536,7 @@ namespace IVPlugin.UI.Windows
         public EmoteType currentType = EmoteType.Full;
         public bool isLooping = false, hideWeapon = false;
 
-        public List<DataPaths> paths = new List<DataPaths>();
+        public List<DataPathsUI> paths = new List<DataPathsUI>();
         public List<VFXData> vFXDatas = new List<VFXData>();
 
         private string[] animationTypes = ["Base", "Startup", "Floor", "Sitting", "Blend", "Other", "Adjusted"];
@@ -453,7 +749,7 @@ namespace IVPlugin.UI.Windows
         }
     }
 
-    public class DataPaths
+    public class DataPathsUI
     {
         public string GamePath = string.Empty;
         public string LocalPath = string.Empty;
@@ -752,6 +1048,11 @@ namespace IVPlugin.UI.Windows
 
             }
 
+            if(ImGui.Button("Export Timeline"))
+            {
+                ExportTimeline();
+            }
+
             ImGui.EndGroup();
 
             ImGui.SameLine(400);
@@ -875,6 +1176,33 @@ namespace IVPlugin.UI.Windows
             
 
             ImGui.EndGroup();
+        }
+
+        private static void ExportTimeline()
+        {
+            IVTracklist tracklist = new();
+
+            tracklist.tracks = new();
+
+            foreach (var track in tracks)
+            {
+                IVTrack temptrack = new()
+                {
+                    Frame = track.Frame,
+                    Type = track.Type,
+                    Value = track.Value,
+                    sValue = track.sValue
+                };
+
+                tracklist.tracks.Add(temptrack);
+            }
+
+            WindowsManager.Instance.fileDialogManager.SaveFileDialog("Select a location to Save the IVTracklist", ".ivtl", $"NeTracklist.ivtl", ".ivtl", (Confirm, FilePath) =>
+            {
+                if (!Confirm) return;
+
+                File.WriteAllText(Path.GetDirectoryName(FilePath) + "\\" + Path.GetFileNameWithoutExtension(FilePath) + ".ivtl", JsonHandler.Serialize(tracklist));
+            });
         }
     }
 

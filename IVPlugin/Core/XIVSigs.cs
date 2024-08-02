@@ -22,7 +22,7 @@ namespace IVPlugin.Core
 
             // Havok
             skeletonUpdatePhysics = "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 41 56 41 57 48 83 EC ?? 48 8B 79 ?? 45 33 FF",
-            skeletonFinalize = "48 8B 0D F1 85 4E 02 E9 E4 D8 3D 00",
+            skeletonFinalize = "40 53 55 57 48 83 EC ?? 65 48 8B 04 25",
             skeletonLookAtIK = "48 8B C4 48 89 58 08 48 89 70 10 F3 0F 11 58",
 
             // Camera
