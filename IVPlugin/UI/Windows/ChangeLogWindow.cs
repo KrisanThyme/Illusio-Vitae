@@ -34,7 +34,7 @@ namespace IVPlugin.UI.Windows
         public static void Show() => IsOpen = true;
         public static void Toggle() => IsOpen = !IsOpen;
 
-        public const int version = 0;
+        public const int version = 1; //change to show an update to changelog
 
         public static void Draw()
         {
@@ -49,6 +49,11 @@ namespace IVPlugin.UI.Windows
             {
                 using (ImRaii.Child("##changelogCHILD", new(0, 620)))
                 {
+                    Ver1();
+
+                    ImGui.Spacing();
+                    ImGui.Spacing();
+
                     ver0();
                 }
                 
@@ -62,6 +67,13 @@ namespace IVPlugin.UI.Windows
         }
 
         #region Logs
+
+        private static void Ver1()
+        {
+            BearGUI.Text("[08/09/24] - Version 1.0.5:", 2, 0xFFFF00FF);
+            BearGUI.Text("- Added support to create IVMP Files");
+            BearGUI.Text("- Small Bug Fixes");
+        }
 
         private static void ver0()
         {

@@ -60,17 +60,17 @@ namespace IVPlugin.UI.Windows.Tabs
 
             ImGui.BeginGroup();
 
-            //if(BearGUI.FontButton("createmod", FontAwesomeIcon.FileCirclePlus.ToIconString()))
-            //{
-            //    ModCreationWindow.Show();
-            //}
+            if (BearGUI.FontButton("createmod", FontAwesomeIcon.FileCirclePlus.ToIconString()))
+            {
+                ModCreationWindow.Show();
+            }
 
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.SetTooltip("Create Custom Emote");
-            //}
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Create Custom Emote");
+            }
 
-            //ImGui.SameLine();
+            ImGui.SameLine();
 
             using (ImRaii.PushFont(UiBuilder.IconFont))
             {
